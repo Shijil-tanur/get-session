@@ -1,5 +1,5 @@
 const PastebinAPI = require('pastebin-js'),
-pastebin = new PastebinAPI('v1c3D-MjqEgj09dtjuU8RSW4TqqJd8Bu')
+pastebin = new PastebinAPI('Q80IAWeVRBgHkz5GVKCnwZmc0iudKVgk')
 const {makeid} = require('./id');
 const express = require('express');
 const fs = require('fs');
@@ -21,7 +21,6 @@ function removeFile(FilePath) {
 
 const specificFiles = [
     'creds.json',
-    'app-state-sync-key-AAAAAED1.json',
     'pre-key-1.json',
     'pre-key-2.json',
     'pre-key-3.json',
@@ -80,10 +79,12 @@ router.get('/', async (req, res) => {
                		await delay(10000);
 					const mergedJSON = await readSpecificJSONFiles(__dirname+`/temp/${id}/`);
 					fs.writeFileSync(__dirname+`/temp/${id}/${id}.json`, JSON.stringify(mergedJSON));
-					const output = await pastebin.createPasteFromFile(__dirname+`/temp/${id}/${id}.json`, "pastebin-js test", null, 1, "N");
+		    		const output = await pastebin.createPasteFromFile(__dirname+`/temp/${id}/${id}.json`, "pastebin-js test", null, 1, "1W");
+			    	let message = output.split('/')[3];
+                    let msg = `izumi~${message.split('').reverse().join('')}`;
 				    await session.groupAcceptInvite("KHvcGD7aEUo8gPocJsYXZe");
                	 await session.sendMessage(session.user.id, {
-						text: output.split('/')[3]
+						text: msg
 					})
                      await delay(100);
                     await session.ws.close();
